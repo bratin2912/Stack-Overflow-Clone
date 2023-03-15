@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Avatar = () => {
+const Avatar = ({children}) => {
   return (
-    <div>Avatar</div>
+    <div>{children}</div>
   )
 }
 

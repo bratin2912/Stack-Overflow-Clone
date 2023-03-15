@@ -72,5 +72,6 @@ nav{
 }
 
 .nav-link:hover{
+    cursor: pointer;
     background-color: #d3e4eb;
 }
