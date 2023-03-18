@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './Mainbar.css'
 const MainBar = () => {
   return (
-    <div>MainBar</div>
+    <div className='mainbar'>MainBar</div>
   )
 }
 
