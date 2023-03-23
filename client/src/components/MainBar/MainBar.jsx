@@ -1,10 +1,21 @@
 import React from 'react'
 import './Mainbar.css'
-import {Link,useLocation} from 'react-router-dom';
+import {useLocation,useNavigate} from 'react-router-dom';
 import QusetionList from './QusetionList';
 const MainBar = () => {
   const location=useLocation();
   const QuestionsList=1;
+  const user=1;
+  const navigate=useNavigate();
+  const redirect=()=>{
+    if(user===null){
+      alert("To Ask a question first login or signup");
+      navigate('/Auth');
+    }
+    else{
+      navigate('/AskQuestion')
+    }
+  }
   const qus=[
     {
       id:1,
@@ -41,7 +52,7 @@ const MainBar = () => {
     <div className='mainbar'>
       <div className='mainbar-header'>
         {location.pathname==='/'?<h1>Top Questions</h1>:<h1>All Questions</h1>}
-        <Link to='/AskQuestion' className='mainbar-btn'>Ask Question</Link>
+        <button onClick={redirect} className='mainbar-btn'>Ask Question</button>
       </div>
       <div>
         {!QuestionsList ? <h1>Loading...</h1>:

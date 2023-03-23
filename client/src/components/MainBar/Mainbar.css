@@ -24,6 +24,7 @@
     border: none;
     text-decoration: none;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .mainbar-header .mainbar-btn:hover{
