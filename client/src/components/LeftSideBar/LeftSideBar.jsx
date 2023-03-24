@@ -11,7 +11,7 @@ const LeftSideBar = () => {
         </NavLink>
         <div className='sidenav-div'>
           <div><p>PUBLIC</p></div>
-          <NavLink className='side-navlink' to='/questions' activeClassName='active'>
+          <NavLink className='side-navlink' to='/Questions' activeClassName='active'>
             <img src={Globe} alt="Globe" width='18'/>
             <p style={{paddingLeft:'10px'}}>Questions</p>
           </NavLink>
