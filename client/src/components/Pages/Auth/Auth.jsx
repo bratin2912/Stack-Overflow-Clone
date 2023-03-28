@@ -1,34 +1,56 @@
 import React, { useState } from 'react'
 import logo from '../../../assets/favicon.ico'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import AboutAuth from './AboutAuth';
+import { signup,login } from '../../../redux/actions/auth';
 import '../Auth/Auth.css'
 const Auth = () => {
-    const [isSignup, setIsSignup] = useState(true);
+    const [isSignup, setIsSignup] = useState(false);
+    const [details,Setdetails] = useState({name:"",email:"",password:""});
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
     const handleSwitch = () => {
         setIsSignup(!isSignup);
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        if(!details.email && !details.password){
+            alert("Enter email and password")
+        }
+        if(isSignup){
+            if(!details.name){
+                alert("Enter name to continue")
+            }
+            dispatch(signup(details,navigate))
+        }
+        else{
+            dispatch(login({email:details.email,password:details.password},navigate))
+        }
     }
     return (
         <section className='auth-section'>
             {isSignup && <AboutAuth/>}
             <div className='auth-container'>
                 {!isSignup && <img src={logo} alt='Stack overflow logo' width='70' />}
-                <form>
+                <form onSubmit={handleSubmit}>
                     {isSignup &&
                         <label htmlFor="name">
                             <h4>Display Name</h4>
-                            <input type="text" name='name' id='name' />
+                            <input type="text" name='name' id='name' onChange={(e)=>{Setdetails({...details,name:e.target.value})}}/>
                         </label>
                     }
                     <label htmlFor="email">
                         <h4>Email</h4>
-                        <input type="email" name='email' id='email' />
+                        <input type="email" name='email' id='email' onChange={(e)=>{Setdetails({...details,email:e.target.value})}}/>
                     </label>
                     <label htmlFor="password">
                         <div style={{display:'flex' ,justifyContent:'space-between'}}>
                             <h4>Password</h4>
                             {!isSignup && <p style={{color:'#007ac6', fontSize:'13px',cursor:'pointer'}}>Forgot password?</p>}
                         </div>
-                        <input type="password" name='password' id='password' />
+                        <input type="password" name='password' id='password' onChange={(e)=>{Setdetails({...details,password:e.target.value})}}/>
                         {isSignup && <p style={{color:'#666767',fontSize:'13px'}}>Password must contain at least eight<br />
                             characters,including at least 1 letter and 1<br />
                             number</p>}
