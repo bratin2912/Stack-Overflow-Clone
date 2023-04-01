@@ -4,24 +4,24 @@ const HomeQuestions = ({question}) => {
   return (
     <div className='display-question-container'>
         <div className='display-vote'>
-            <p>{question.votes}</p>
+            <p>{question.upVote.length-question.downVote.length}</p>
             <p>Votes</p>
         </div>
         <div className='display-vote-ans'>
-            <p>{question.numberOfVotes}</p>
+            <p>{question.noOfans}</p>
             <p>Answers</p>
         </div>
         <div className='display-question-details'>
-            <Link to={`/Questions/${question.id}`} className='question-title-link'>{question.title}</Link>
+            <Link to={`/Questions/${question._id}`} className='question-title-link'>{question.questionTitle}</Link>
             <div className="display-tags-time">
                 <div className="display-tags">
-                    {question.tags.map(tag=>
+                    {question.questionTags.map(tag=>
                         <p key={tag}>{tag}</p>
                     )}
                 </div>
                 <div className='display-time'>
                 <p >
-                    asked on {question.askedOn} by {question.by}
+                    asked on {question.postedOn} by {question.userPosted}
                 </p>
                 </div>
             </div>

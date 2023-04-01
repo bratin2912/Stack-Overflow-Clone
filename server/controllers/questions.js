@@ -13,3 +13,14 @@ export const askQuestion=async(req,res)=>{
         })
     }
 }
+
+export const getAllQuestion=async(req,res)=>{
+    try{
+        const questionList=await Questions.find();
+        res.status(200).send(questionList)
+    }catch(err){
+        res.status(404).send({
+            message:err.message
+        })
+    }
+}
