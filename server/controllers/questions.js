@@ -1,4 +1,4 @@
-import Questions from "../models/questions.js"
+import Questions from "../models/questions.js";
 export const askQuestion=async(req,res)=>{
     const postQuestionData=req.body;
     const postQuestion=new Questions(postQuestionData)

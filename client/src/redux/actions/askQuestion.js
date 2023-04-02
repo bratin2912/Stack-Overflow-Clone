@@ -14,7 +14,17 @@ export const askQuestion=(questionData,navigate)=>async(dispatch)=>{
 export const getQuestions=()=>async(dispatch)=>{
     try{
         const {data}=await api.getAllQuestion();
+        console.log(data);
         dispatch({type:"GET_ALL_QUESTION",payload:data});
+    }catch(err){
+        console.log(err);
+    }
+}
+
+export const postAnswer=(id,ansdata)=>async(dispatch)=>{
+    try{
+        await api.postAnswer(id,ansdata);
+        dispatch(getQuestions());
     }catch(err){
         console.log(err);
     }

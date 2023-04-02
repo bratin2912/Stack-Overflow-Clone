@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import userRouter from './routes/user.js';
 import questionRouter from './routes/questions.js';
+import answerRoute from './routes/answer.js';
 const app=express();
 app.use(express.json({limit:'30mb',extented:true}));
 app.use(express.urlencoded({limit:'30mb',extented:true}));
@@ -10,6 +11,7 @@ app.use(cors());
 
 app.use('/user',userRouter)
 app.use('/question',questionRouter)
+app.use('/answer',answerRoute)
 
 const PORT=process.env.PORT || 5000;
 const CONNECTION_URL='mongodb+srv://admin:admin@stack-overflow-clone.3f9r40t.mongodb.net/?retryWrites=true&w=majority';

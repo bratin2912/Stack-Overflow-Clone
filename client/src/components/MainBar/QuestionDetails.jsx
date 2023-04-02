@@ -1,20 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Avatar from '../Avatar/Avatar';
 import upVote from '../../../src/assets/upVote.png';
 import downVote from '../../../src/assets/downVote.png';
 import { askQuestionReducer } from '../../redux/reducer/askQuestion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentUserReducer } from '../../redux/reducer/currentUser';
+import { useNavigate } from 'react-router-dom';
+import { postAnswer } from '../../redux/actions/askQuestion';
 import './QuestionDetails.css';
 import DisplayAns from './DisplayAns';
 const QuestionDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const questionList = useSelector(state => state.askQuestionReducer);
+    console.log(questionList)
+    const User = useSelector(state => state.currentUserReducer);
+    const [answer, setAnswer] = useState("")
+    const handlePostAns = (e, ansLength) => {
+        e.preventDefault();
+        if (User === null) {
+            alert("To answer a question first signup or login");
+            navigate('/Auth')
+        }
+        else if (answer === "") {
+            alert("Write your answer first then post")
+        }
+        else {
+            dispatch(postAnswer(id, { noOfans: ansLength + 1, answerBody: answer, userId: User.result._id, userAnswered: User.result.name }))
+            setAnswer("")
+        }
+    }
     return (
         <div className='question-details'>
             {
-                questionList.data === null ?
+                questionList === null ?
                     <h1>Loading...</h1> :
                     <>
                         {questionList.data.filter(question => question._id === id).map(question => {
@@ -44,7 +66,7 @@ const QuestionDetails = () => {
                                             </div>
                                             <div>
                                                 <p>asked on {question.postedOn}</p>
-                                                <Link to={`/User/${question.userId}`} className='user-link' state={{ color: '#0086d8' }}>
+                                                <Link to={`/User/${question.userId}`} className='user-link' style={{ color: '#0086d8' }}>
                                                     <Avatar backgroundColor='orange' px='10px' py='5px' borderRadius='2px'>
                                                         {question.userPosted[0].toUpperCase()}
                                                     </Avatar>
@@ -55,33 +77,36 @@ const QuestionDetails = () => {
                                             </div>
                                         </div>
                                     </section>
-            {question.noOfans !== 0 &&
-                <section>
-                    <h3>{question.noOfans}</h3>
-                    <DisplayAns key={question._id} answers={question.answer} />
-                </section>
-            }
-            <section className='post-ans-container'>
-                <h3>Your Answer</h3>
-                <form>
-                    <textarea name="" id="" cols="30" rows="10"></textarea><br />
-                    <input type="Submit" value='Post Your Answer' className='post-ans-btn' />
-                </form>
-                <p>
-                    Browse other Question tagged
-                    {
-                        question.questionTags.map(tag => {
-                            return <Link to='/Tgas' key={tag} className='ans-tags'> {tag}</Link>
-                        })
-                    } or
-                    <Link to='/AskQuestion' className='ans-tags-div'>ask your own question</Link>
-                </p>
-            </section>
-        </div>
-    )
-})}
+                                    {question.noOfans !== 0 &&
+                                        <section>
+                                            <h3>{question.noOfans} Answers</h3>
+                                            <DisplayAns key={question._id} answers={question.answer} />
+                                        </section>
+                                    }
+                                    {
+                                        !(question.userPosted.toUpperCase() === User.result.name.toUpperCase()) &&
+                                        <section className='post-ans-container'>
+                                            <h3>Your Answer</h3>
+                                            <form onSubmit={(e) => handlePostAns(e, question.answer.length)}>
+                                                <textarea name="" id="" cols="30" rows="10" onChange={(e) => setAnswer(e.target.value)} value={answer}></textarea><br />
+                                                <input type="Submit" value='Post Your Answer' className='post-ans-btn' />
+                                            </form>
+                                            <p>
+                                                Browse other Question tagged
+                                                {
+                                                    question.questionTags.map(tag => {
+                                                        return <Link to='/Tgas' key={tag} className='ans-tags'> {tag}</Link>
+                                                    })
+                                                } or
+                                                <Link to='/AskQuestion' className='ans-tags-div'>ask your own question</Link>
+                                            </p>
+                                        </section>
+                                    }
+                                </div>
+                            )
+                        })}
                     </>
-        }
+            }
         </div >
     )
 }

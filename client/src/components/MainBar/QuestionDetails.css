@@ -132,3 +132,32 @@
     ;line-height: 22px;
     white-space: pre-line;
 }
+
+.answer-action-user button{
+    background-color: transparent;
+    border: none;
+    padding: 5px 0px;
+    margin: 0px 10px 0px 0px;
+    text-decoration: none;
+    color: #939292;
+    cursor: pointer;
+    font-size: 14px;
+    transform: 0.3s;
+}
+
+.answer-action-user button:active{
+    border-bottom: solid 1px black;
+}
+
+.answer-action-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.answer-action-user div:nth-child(2) p,
+.answer-action-user div:nth-child(2) .user-link{
+    text-decoration: none;
+    font-size: 14px;
+    margin: 0%;
+}
