@@ -1,6 +1,8 @@
 import React from 'react'
 import Avatar from '../Avatar/Avatar';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
 import './QuestionDetails.css'
 const DisplayAns = (answers) => {
     return (
@@ -16,7 +18,7 @@ const DisplayAns = (answers) => {
                                     <button>Delete</button>
                                 </div>
                                 <div>
-                                    <p>answered on {ans.answeredOn}</p>
+                                    <p>answered {moment(ans.answeredOn).fromNow()} by</p>
                                     <Link to={`/User/${ans.userId}`} className='user-link' style={{ color: '#0086d8' }}>
                                         <Avatar backgroundColor='green' px='10px' py='5px' borderRadius={'2px'}>
                                             {ans.userAnswered[0].toUpperCase()}

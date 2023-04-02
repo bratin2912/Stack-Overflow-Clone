@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import copy from 'copy-to-clipboard'
+
 import Avatar from '../Avatar/Avatar';
 import upVote from '../../../src/assets/upVote.png';
 import downVote from '../../../src/assets/downVote.png';
@@ -15,6 +18,8 @@ const QuestionDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location=useLocation();
+    const url='http://localhost:3000'
     const questionList = useSelector(state => state.askQuestionReducer);
     console.log(questionList)
     const User = useSelector(state => state.currentUserReducer);
@@ -32,6 +37,11 @@ const QuestionDetails = () => {
             dispatch(postAnswer(id, { noOfans: ansLength + 1, answerBody: answer, userId: User.result._id, userAnswered: User.result.name }))
             setAnswer("")
         }
+    }
+
+    const handleShare=()=>{
+        copy(url+location.pathname);
+        alert(`Url copied:${url+location.pathname}`)
     }
     return (
         <div className='question-details'>
@@ -61,11 +71,11 @@ const QuestionDetails = () => {
                                         </div>
                                         <div className="question-action-user">
                                             <div>
-                                                <button>Share</button>
+                                                <button onClick={handleShare}>Share</button>
                                                 <button>Delete</button>
                                             </div>
                                             <div>
-                                                <p>asked on {question.postedOn}</p>
+                                                <p>asked {moment(question.postedOn).fromNow()} by</p>
                                                 <Link to={`/User/${question.userId}`} className='user-link' style={{ color: '#0086d8' }}>
                                                     <Avatar backgroundColor='orange' px='10px' py='5px' borderRadius='2px'>
                                                         {question.userPosted[0].toUpperCase()}
