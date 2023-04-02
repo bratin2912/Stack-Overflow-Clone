@@ -17,8 +17,12 @@ const Askquestion = () => {
   }
   const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log(askQuestionData);
-    dispatch(askQuestion({...askQuestionData,userPosted:User.result.name},navigate))
+    if(askQuestionData.questionTitle==="" || askQuestionData.questionBody==="" || askQuestionData.questionTags.length===0){
+      alert("Fill all the filed first");
+    }
+    else{
+      dispatch(askQuestion({...askQuestionData,userPosted:User.result.name},navigate))
+    }
   }
   return (
     <div className='ask-question'>
