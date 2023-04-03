@@ -14,7 +14,6 @@ export const askQuestion=(questionData,navigate)=>async(dispatch)=>{
 export const getQuestions=()=>async(dispatch)=>{
     try{
         const {data}=await api.getAllQuestion();
-        console.log(data);
         dispatch({type:"GET_ALL_QUESTION",payload:data});
     }catch(err){
         console.log(err);
@@ -27,6 +26,17 @@ export const postAnswer=(id,ansdata)=>async(dispatch)=>{
         dispatch(getQuestions());
     }catch(err){
         console.log(err);
+    }
+}
+
+export const deleteQuestion=(id,navigate)=>async(dispatch)=>{
+    try {
+        await api.deleteQuestion(id);
+        dispatch(getQuestions());
+        alert('Deleted successfully');
+        navigate('/')
+    } catch (error) {
+        console.log(error)
     }
 }
 

@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './QuestionDetails.css'
-const DisplayAns = (answers) => {
+const DisplayAns = ({answers,handleShare}) => {
+
     return (
         <div>
             {
-                answers.answers.map(ans => {
+                answers.map(ans => {
                     return (
                         <div className="display-ans" key={ans._id}>
                             <p>{ans.answerBody}</p>
                             <div className="answer-action-user">
                                 <div>
-                                    <button>Share</button>
+                                    <button onClick={handleShare}>Share</button>
                                     <button>Delete</button>
                                 </div>
                                 <div>

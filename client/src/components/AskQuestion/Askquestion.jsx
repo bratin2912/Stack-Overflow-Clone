@@ -21,7 +21,7 @@ const Askquestion = () => {
       alert("Fill all the filed first");
     }
     else{
-      dispatch(askQuestion({...askQuestionData,userPosted:User.result.name},navigate))
+      dispatch(askQuestion({...askQuestionData,userPosted:User.result.name,userId:User.result._id},navigate))
     }
   }
   return (
@@ -43,7 +43,7 @@ const Askquestion = () => {
             <label htmlFor="ask-qus-tags">
               <h4>Tags</h4>
               <p>Add up to 5 tags to describe what your question is about. Start typing to see suggestions.</p>
-              <input type="text" id='ask-qus-tags' placeholder='e.g ios ruby objective-c' onChange={(e)=>setaskQuestionData({...askQuestionData,questionTags:e.target.value.split(/\s+/)})}/>
+              <input type="text" id='ask-qus-tags' placeholder='e.g ios ruby objective-c' onChange={(e)=>setaskQuestionData({...askQuestionData,questionTags:e.target.value.trim().split(/\s+/)})}/>
             </label>
           </div>
           <input type="submit" value='Review Your Question' className='review-btn'/>

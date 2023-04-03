@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams,useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import copy from 'copy-to-clipboard'
+import copy from 'copy-to-clipboard';
 
 import Avatar from '../Avatar/Avatar';
 import upVote from '../../../src/assets/upVote.png';
@@ -11,7 +11,7 @@ import { askQuestionReducer } from '../../redux/reducer/askQuestion';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentUserReducer } from '../../redux/reducer/currentUser';
 import { useNavigate } from 'react-router-dom';
-import { postAnswer } from '../../redux/actions/askQuestion';
+import { postAnswer,deleteQuestion } from '../../redux/actions/askQuestion';
 import './QuestionDetails.css';
 import DisplayAns from './DisplayAns';
 const QuestionDetails = () => {
@@ -43,6 +43,11 @@ const QuestionDetails = () => {
         copy(url+location.pathname);
         alert(`Url copied:${url+location.pathname}`)
     }
+
+    const handleDelete=(e)=>{
+        e.preventDefault();
+        dispatch(deleteQuestion(id,navigate))
+    }
     return (
         <div className='question-details'>
             {
@@ -72,7 +77,10 @@ const QuestionDetails = () => {
                                         <div className="question-action-user">
                                             <div>
                                                 <button onClick={handleShare}>Share</button>
-                                                <button>Delete</button>
+                                                {
+                                                    question?.userId === User?.result._id &&
+                                                    <button onClick={handleDelete}>Delete</button>
+                                                }
                                             </div>
                                             <div>
                                                 <p>asked {moment(question.postedOn).fromNow()} by</p>
@@ -90,11 +98,11 @@ const QuestionDetails = () => {
                                     {question.noOfans !== 0 &&
                                         <section>
                                             <h3>{question.noOfans} Answers</h3>
-                                            <DisplayAns key={question._id} answers={question.answer} />
+                                            <DisplayAns key={question._id} answers={question.answer} handleShare={handleShare}/>
                                         </section>
                                     }
                                     {
-                                        !(question.userPosted.toUpperCase() === User.result.name.toUpperCase()) &&
+                                        question?.userId !== User?.result._id &&
                                         <section className='post-ans-container'>
                                             <h3>Your Answer</h3>
                                             <form onSubmit={(e) => handlePostAns(e, question.answer.length)}>
