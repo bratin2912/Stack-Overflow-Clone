@@ -29,3 +29,35 @@ const updateNoofans=async(_id,noOfans)=>{
         console.log(err)
     }
 }
+
+export const deleteAnswer=async(req,res)=>{
+    const {id:_id}=req.params;
+    const {answerId,noOfans}=req.body;
+    console.log(req.body)
+    if(!mongoose.Types.ObjectId.isValid(_id)){
+        return res.status(404).send({
+            message:"Question unavailable.."
+        })
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(answerId)){
+        return res.status(404).send({
+            message:"Answer unavailable.."
+        })
+    }
+    updateNoofans(_id,noOfans)
+    try {
+        await Questions.updateOne(
+            {_id},
+            {$pull:{'answer':{_id:answerId}}}
+        )
+        res.status(200).send({
+            message:"Answer swccessfully deleted.."
+        })
+    } catch (error) {
+        res.status(400).send({
+            message:"Failed",
+            error
+        })
+    }
+}

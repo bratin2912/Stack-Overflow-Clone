@@ -36,6 +36,15 @@ export const deleteQuestion=(id,navigate)=>async(dispatch)=>{
         alert('Deleted successfully');
         navigate('/')
     } catch (error) {
+        alert('You are not author of this question')
+    }
+}
+
+export const deleteAnswer=(id,answerId,noOfans)=>async(dispatch)=>{
+    try {
+        await api.deleteAnswer(id,answerId,noOfans);
+        dispatch(getQuestions());
+    } catch (error) {
         console.log(error)
     }
 }

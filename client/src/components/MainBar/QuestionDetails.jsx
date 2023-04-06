@@ -21,7 +21,6 @@ const QuestionDetails = () => {
     const location=useLocation();
     const url='http://localhost:3000'
     const questionList = useSelector(state => state.askQuestionReducer);
-    console.log(questionList)
     const User = useSelector(state => state.currentUserReducer);
     const [answer, setAnswer] = useState("")
     const handlePostAns = (e, ansLength) => {
@@ -54,7 +53,7 @@ const QuestionDetails = () => {
                 questionList === null ?
                     <h1>Loading...</h1> :
                     <>
-                        {questionList.data.filter(question => question._id === id).map(question => {
+                        {questionList?.data?.filter(question => question._id === id).map(question => {
                             return (
                                 <div key={question._id}>
                                     <section className='question-details-container-1'>
@@ -98,7 +97,7 @@ const QuestionDetails = () => {
                                     {question.noOfans !== 0 &&
                                         <section>
                                             <h3>{question.noOfans} Answers</h3>
-                                            <DisplayAns key={question._id} answers={question.answer} handleShare={handleShare}/>
+                                            <DisplayAns key={question._id} answers={question.answer} handleShare={handleShare} user={User} noOfans={question.noOfans} id={id}/>
                                         </section>
                                     }
                                     {
