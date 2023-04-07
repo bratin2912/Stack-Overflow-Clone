@@ -36,7 +36,7 @@ export const deleteQuestion=(id,navigate)=>async(dispatch)=>{
         alert('Deleted successfully');
         navigate('/')
     } catch (error) {
-        alert('You are not author of this question')
+        alert('You are not authenticated')
     }
 }
 

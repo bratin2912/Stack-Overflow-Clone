@@ -17,6 +17,8 @@ export const getAllQuestion=()=>API.get('/question/get');
 export const postAnswer=(id,ansdata)=>API.patch(`/answer/post/${id}`,ansdata);
 
 export const deleteQuestion=(id)=>API.delete(`/question/delete/${id}`);
-export const deleteAnswer=(id,answerId,noOfans)=>API.patch(`/answer/delete/${id}`,{answerId,noOfans})
+export const deleteAnswer=(id,answerId,noOfans)=>API.patch(`/answer/delete/${id}`,{answerId,noOfans});
+
+export const fetchAllUsers=()=>API.get('/user/getAllUsers');
 
 

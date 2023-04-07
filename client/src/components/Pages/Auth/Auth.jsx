@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import logo from '../../../assets/favicon.ico'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AboutAuth from './AboutAuth';
 import { signup,login } from '../../../redux/actions/auth';
+import authReducer from '../../../redux/reducer/auth';
 import '../Auth/Auth.css'
 const Auth = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [details,Setdetails] = useState({name:"",email:"",password:""});
     const dispatch=useDispatch();
     const navigate=useNavigate();
+    
+    const authUser=useSelector(state=>state.authReducer);
+    console.log(authUser)
+    
     const handleSwitch = () => {
         setIsSignup(!isSignup);
     }
@@ -17,11 +22,13 @@ const Auth = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         if(!details.email && !details.password){
-            alert("Enter email and password")
+            alert("Enter email and password");
+            return
         }
         if(isSignup){
             if(!details.name){
-                alert("Enter name to continue")
+                alert("Enter name to continue");
+                return
             }
             dispatch(signup(details,navigate))
         }
@@ -65,7 +72,15 @@ const Auth = () => {
                             </p>
                         </label>
                     }
-                    <button type='submit' className='auth-btn'>{isSignup ? 'Sign up' : 'Sign in'}</button>
+                    {
+                        authUser.isLoader && <div className="spinner"></div>
+                    }
+                    {
+                        authUser.success && <div className='tick'></div>
+                    }
+                    {
+                        !authUser.isLoader && <button type='submit' className='auth-btn'>{isSignup ? 'Sign up' : 'Sign in'}</button>
+                    } 
                     {
                         isSignup && 
                         <p style={{color:'#666767',fontSize:'13px'}}>

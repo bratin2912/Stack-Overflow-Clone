@@ -5,6 +5,7 @@ import AllRoutes from './components/AllRoutes/AllRoutes';
 import { useEffect } from 'react';
 import { getQuestions } from './redux/actions/askQuestion';
 import { useDispatch } from 'react-redux';
+import { fetchAllUsers } from './redux/actions/users';
 function App() {
   const dispatch=useDispatch();
   useEffect(()=>{

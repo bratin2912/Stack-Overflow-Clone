@@ -2,7 +2,6 @@ import Questions from "../models/questions.js";
 import mongoose from "mongoose";
 export const postAnswer=async(req,res)=>{
     const {id:_id}=req.params;
-    console.log(_id)
     const {noOfans,answerBody,userAnswered,userId}=req.body;
     if(!mongoose.Types.ObjectId.isValid(_id)){
         return res.status(404).send({
@@ -33,7 +32,6 @@ const updateNoofans=async(_id,noOfans)=>{
 export const deleteAnswer=async(req,res)=>{
     const {id:_id}=req.params;
     const {answerId,noOfans}=req.body;
-    console.log(req.body)
     if(!mongoose.Types.ObjectId.isValid(_id)){
         return res.status(404).send({
             message:"Question unavailable.."
