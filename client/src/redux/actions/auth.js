@@ -25,6 +25,6 @@ export const login=(authdata,navigate)=> async(dispatch)=>{
         navigate('/')
     }catch(err){
         dispatch({type:"ERROR_OCCURED"})
-        alert(err.response.data.message);
+        alert(err.response?.data?.message);
     }
 }

@@ -6,6 +6,12 @@ import userRouter from './routes/user.js';
 import questionRouter from './routes/questions.js';
 import answerRoute from './routes/answer.js';
 const app=express();
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+  
 app.use(express.json({limit:'30mb',extented:true}));
 app.use(express.urlencoded({limit:'30mb',extented:true}));
 app.use(cors());
