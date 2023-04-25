@@ -1,0 +1,13 @@
+.home-container1{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0% auto;
+}
+
+.home-container2{
+    width: 85%;
+    padding: 15px;
+    box-sizing: border-box;
+}
